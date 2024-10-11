@@ -3,28 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Científico Mundo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand">Navbar</a>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
 
-    <div class="card" style="width: 18rem;">
-    <img src="..." class="card-img-top" alt="...">
-    <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+                Científico Mundo
+            </a>
+            <form class="d-flex ms-auto" role="search">
+                <input class="form-control me-2" type="search" placeholder="Pesquisar..." aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Pesquisar</button>
+            </form>
+            <a href="{% url 'login' %}" class="btn btn-outline-light ms-2">Login/Entrar</a>
+            <button class="btn btn-outline-light ms-2">Perfil</button>
+        </div>
+    </nav>
+
+    <!-- Links abaixo da navbar -->
+    <!-- <div class="container mt-3">
+        <ul class="nav nav-pills justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Validados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Mais acessados</a>
+            </li>
+        </ul>
+    </div> -->
+
+    <!-- Lista de Artigos -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <!-- Exemplo de artigo -->
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <div class="d-flex align-items-center justify-content-center" style="background-color: #f8f9fa; height: 100%;">
+                                <img src="placeholder.png" class="img-fluid rounded-start" alt="Thumbnail" style="max-width: 100px;">
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5 class="card-title">Título: A Importância da Divulgação Científica na Sociedade Moderna</h5>
+                                <p class="card-text">
+                                    Assunto: A divulgação científica desempenha um papel crucial na sociedade moderna, pois torna o conhecimento produzido acessível para o público em geral. Além disso, contribui para melhorar o bem-estar da sociedade ao fornecer informações...
+                                </p>
+                                <p class="card-text"><small class="text-muted">Autor(a): Fulano | Área: Biologia</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Repetir o card para outros artigos -->
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-2">
+                            <div class="d-flex align-items-center justify-content-center" style="background-color: #f8f9fa; height: 100%;">
+                                <img src="placeholder.png" class="img-fluid rounded-start" alt="Thumbnail" style="max-width: 100px;">
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="card-body">
+                                <h5 class="card-title">Título: A Importância da Divulgação Científica na Sociedade Moderna</h5>
+                                <p class="card-text">
+                                    Assunto: A divulgação científica desempenha um papel crucial na sociedade moderna, pois torna o conhecimento produzido acessível para o público em geral...
+                                </p>
+                                <p class="card-text"><small class="text-muted">Autor(a): Fulano | Área: Matemática</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <!-- Botão flutuante -->
+    <a href="{% url 'adicionar_artigo' %}" class="btn btn-dark btn-lg position-fixed bottom-0 end-0 m-4 rounded-circle">
+        <span class="fs-3">+</span>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
