@@ -21,3 +21,33 @@ class Comentario(models.Model):
     texto=models.TextField()
     def __str__(self):
         return self.texto
+
+class Ocupaçao(models.Model):
+    nome = models.CharField(max_length=100)
+
+
+    def __str__(self):
+        return self.nome
+
+class Validação(models.Model):
+    nome = models.CharField(max_length=200)
+    instituição = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.nome
+
+
+class Projeto(models.Model):
+    usuario = models.ForeignKey(Usuario, on_delete= models.CASCADE)
+    titulo = models.CharField(max_length=200)
+    introducao = models.TextField()
+    objetivo = models.TextField()
+    metodologia = models.TextField()
+    resultados = models.TextField()
+    conclusao = models.TextField()
+    validacao = models.ForeignKey(Validação, on_delete= models.CASCADE)
+    imagem = models.ImageField(upload_to='capas/')
+    orientador = models.CharField(max_length=150)
+
+    def __str__(self) -> str:
+        return self.titulo
