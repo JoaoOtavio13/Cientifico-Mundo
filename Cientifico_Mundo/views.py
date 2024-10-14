@@ -50,7 +50,7 @@ def perfil(request):
 
 #crud do artigo
 # não está salvando
-def cadastro_artigo(request):
+def cadastro_projeto(request):
     if request.method=='POST':
         form=ProjetoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -61,9 +61,9 @@ def cadastro_artigo(request):
     context={
         'form':form
     }
-    return render(request, 'adicionar_artigo.html',context)
+    return render(request, 'adicionar_projeto.html',context)
 
-def editar_artigo(request, id):
+def editar_projeto(request, id):
     projeto=Projeto.objects.get(id=id)
     if request.method=='POST':
         form=ProjetoForm(request.POST, request.FILES, instance=projeto)
@@ -77,11 +77,11 @@ def editar_artigo(request, id):
     }
     return render(request, 'cadastro.html',context)
 
-def exclusao_artigo(request, id):
+def exclusao_projeto(request, id):
     projeto=Projeto.objects.get(id=id)
     projeto.delete()
     return redirect('index')
 
 #pagina do artigo
-def artigo(request):
-    return render(request, 'artigo.html')
+def projeto(request):
+    return render(request, 'projeto.html')
