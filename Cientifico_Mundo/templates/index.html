@@ -43,15 +43,17 @@
             <div class="col-lg-12">
                 <div class="row g-0">
                     {% for projetos in projetos %}
-                    <div class="col-md-10">
-                        <div class="card mb-3">
-                            <div class="card-body">
-                                <h5 class="card-title">Titulo: {{projetos.titulo}}</h5>
-                                <p class="card-text">{{projetos.introducao}}</p>
-                                <p class="card-text"><small class="text-muted">Autor: {{ projetos.usuario}}</small></p>
+                    <a href="{% url 'artigo' %}" style="text-decoration: none;">
+                        <div class="col-md-10">
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">Titulo: {{projetos.titulo}}</h5>
+                                    <p class="card-text">{{projetos.resumo}}</p>
+                                    <p class="card-text"><small class="text-muted">Autor: {{ projetos.usuario}}</small></p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     {% endfor %}
                 </div>
             </div>

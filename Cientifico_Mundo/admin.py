@@ -8,7 +8,7 @@ class OcupacaoAdmin(admin.ModelAdmin):
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ['nome', 'email','senha', 'ocupacao', 'imagem']
+    list_display = ['nome', 'email', 'idade','senha', 'ocupacao', 'imagem']
 
 @admin.register(Comentario)
 class ComentarioAdmin(admin.ModelAdmin):
@@ -20,7 +20,7 @@ class ValidacaoAdmin(admin.ModelAdmin):
 
 @admin.register(Projeto)
 class ProjetoAdmin(admin.ModelAdmin):
-    list_display = ['usuario', 'titulo', 'introducao', 'objetivo', 'metodologia', 'resultados', 'conclusao', 'validacao', 'imagem', 'orientador']
+    list_display = ['usuario', 'titulo', 'resumo', 'introducao', 'objetivo', 'metodologia', 'resultados', 'conclusao', 'validacao', 'imagem', 'orientador']
 
 @admin.register(Instituicao)
 class InstituiçãoAdmin(admin.ModelAdmin):

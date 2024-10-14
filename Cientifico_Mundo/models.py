@@ -10,6 +10,7 @@ class Ocupacao(models.Model):
 class Usuario(models.Model):
     nome = models.CharField(max_length=255)
     email = models.EmailField()
+    idade = models.IntegerField()
     senha = models.CharField(max_length=255)
     ocupacao=models.ForeignKey(Ocupacao, on_delete=models.CASCADE)
     imagem=models.ImageField(upload_to='usuarios', null=True, blank=True)
@@ -42,6 +43,7 @@ class Validacao(models.Model):
 class Projeto(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete= models.CASCADE)
     titulo = models.CharField(max_length=200)
+    resumo = models.TextField()
     introducao = models.TextField()
     objetivo = models.TextField()
     metodologia = models.TextField()

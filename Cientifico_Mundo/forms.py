@@ -9,6 +9,7 @@ class UsuarioForm(forms.ModelForm):
         widgets = {
             'nome': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'idade': forms.NumberInput(attrs={'class': 'form-control'}),
             'senha': forms.PasswordInput(attrs={'class': 'form-control'}),
             'ocupacao': forms.Select(attrs={'class': 'form-control'}),
             'imagem': forms.FileInput(attrs={'class': 'form-control'}),
@@ -23,6 +24,7 @@ class ProjetoForm(forms.ModelForm):
         widgets = {
             'usuario': forms.Select(attrs={'class': 'form-control'}),
             'titulo': forms.TextInput(attrs={'class': 'form-control'}),
+            'resumo': forms.Textarea(attrs={'class': 'form-control'}),
             'introducao': forms.Textarea(attrs={'class': 'form-control'}),
             'objetivo': forms.Textarea(attrs={'class': 'form-control'}),
             'metodologia': forms.Textarea(attrs={'class': 'form-control'}),
