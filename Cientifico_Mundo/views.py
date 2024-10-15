@@ -75,7 +75,7 @@ def editar_projeto(request, id):
     context={
         'form':form
     }
-    return render(request, 'cadastro.html',context)
+    return render(request, 'adicionar_projeto.html',context)
 
 def exclusao_projeto(request, id):
     projeto=Projeto.objects.get(id=id)
