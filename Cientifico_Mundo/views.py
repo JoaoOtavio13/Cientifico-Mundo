@@ -11,6 +11,7 @@ def index(request):
     }
     return render(request, 'index.html',context) 
 
+
 #crud do usuario
 def cadastro_usuario(request):
     if request.method=='POST':

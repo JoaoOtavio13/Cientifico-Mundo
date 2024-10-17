@@ -1,18 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Científico Mundo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+        .btn-secondary {
+            margin-right: 10px;
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+        .card-text small {
+            color: #6c757d;
+        }
+        .card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .btn-floating {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+    </style>
 </head>
 <body>
+    <!-- {% load static %} -->
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="color: black;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
-                <img src="/Imagens PI/logo.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top">
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="{% static 'Imagens PI/logo.png' %}" alt="Logo" width="40" height="40">
                 Científico Mundo
             </a>
             <form class="d-flex ms-auto" role="search">
@@ -24,51 +53,38 @@
         </div>
     </nav>
 
-    <!-- Links abaixo da navbar -->
-    <!-- <div class="container mt-3">
-        <ul class="nav nav-pills justify-content-center">
-            <li class="nav-item">
-                <a class="nav-link active" href="#">Validados</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Mais acessados</a>
-            </li>
-        </ul>
-    </div> -->
-
-    {% block content %}
-    <!-- Lista de Artigos -->
+    <!-- Conteúdo Principal -->
     <div class="container mt-4">
+        {% block content %}
         <div class="row">
-            <div class="col-lg-12">
-                <div class="row g-0">
-                    {% for projetos in projetos %}
-                    <a href="{% url 'projeto' %}" style="text-decoration: none;">
-                        <div class="col-md-10">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Titulo: {{projetos.titulo}}</h5>
-                                    <p class="card-text">{{projetos.resumo}}</p>
-                                    <p class="card-text"><small class="text-muted">Autor: {{ projetos.usuario}}</small></p>
-                                </div>
-                            </div>
+            {% for projeto in projetos %}
+            <div class="col-md-10 mb-4">
+                <div class="card">
+                    <a href="{% url 'projeto' %}" class="text-decoration-none text-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">Título: {{ projeto.titulo }}</h5>
+                            <p class="card-text">{{ projeto.resumo }}</p>
+                            <p class="card-text">
+                                <small>Autor: {{ projeto.usuario }}</small>
+                            </p>
                         </div>
                     </a>
-                    <!-- o editar está enviando para página errada -->
-                    <a href="{% url 'editar_projeto' projetos.id %}" class="btn btn-secondary">Editar</a>
-                    <a href="{% url 'exclusao_projeto' projetos.id %}" class="btn btn-secondary">Excluir</a>
-                    {% endfor %}
+                </div>
+                <div class="mt-2">
+                    <a href="{% url 'editar_projeto' projeto.id %}" class="btn btn-secondary">Editar</a>
+                    <a href="{% url 'exclusao_projeto' projeto.id %}" class="btn btn-secondary">Excluir</a>
                 </div>
             </div>
+            {% endfor %}
         </div>
+        {% endblock %}
     </div>
 
-
     <!-- Botão flutuante -->
-    <a href="{% url 'cadastro_projeto' %}" class="btn btn-dark btn-lg position-fixed bottom-0 end-0 m-4 rounded-circle">
+    <a href="{% url 'cadastro_projeto' %}" class="btn btn-dark btn-lg rounded-circle btn-floating">
         <span class="fs-3">+</span>
     </a>
-    {% endblock %}
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
