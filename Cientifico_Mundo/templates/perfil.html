@@ -67,6 +67,7 @@
                     <p>{{ usuario.ocupacao.nome }}</p>
                     <p>{{ usuario.email }}</p>
                     <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-outline-light btn-edit-profile">Editar Perfil</a>
+                    <a href="{% url 'exclusao_usuario' usuario.id %}" class="btn btn-outline-light btn-edit-profile">Excluir Perfil</a>
                 </div>
             </div>
         </div>
