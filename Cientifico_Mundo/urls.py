@@ -11,4 +11,5 @@ urlpatterns = [
     path('cadastro_projeto/', cadastro_projeto, name='cadastro_projeto'),
     path('editar_projeto/<int:id>/', editar_projeto, name='editar_projeto'),
     path('exclusao_projeto/<int:id>/', exclusao_projeto, name='exclusao_projeto'),
+    path('login/', login, name='login'),
 ]

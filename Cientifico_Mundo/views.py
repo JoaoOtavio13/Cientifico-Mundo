@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
+from django.contrib.auth import authenticate, login as login_django
 # Create your views here.
 
 #listagem de artigos
@@ -16,14 +17,15 @@ def index(request):
 def cadastro_usuario(request):
     if request.method=='POST':
         form=UsuarioForm(request.POST, request.FILES)
+        print(form.errors)
         if form.is_valid():
-            form.save()
+            Usuario.objects.create_user(**form.cleaned_data)
             return redirect('index')
     else:
         form=UsuarioForm()
-        context={
-            'form':form
-        }
+    context={
+        'form':form
+    }
     return render(request, 'cadastro.html',context)
 
 def editar_usuario(request, id):
@@ -47,7 +49,10 @@ def exclusao_usuario(request, id):
 
 #perfil
 def perfil(request):
-    return render(request, 'perfil.html')
+    context={
+        'usuario': Usuario.objects.get(id=request.user.id)    
+}
+    return render(request, 'perfil.html',context)
 
 #crud do artigo
 # não está salvando
@@ -86,3 +91,14 @@ def exclusao_projeto(request, id):
 #pagina do artigo
 def projeto(request):
     return render(request, 'projeto.html')
+
+#pagina de login
+def login(request):
+    if request.method=='POST':
+        username=request.POST.get('username')
+        password=request.POST.get('password')
+        usuario=authenticate(username=username, password=password)
+        if usuario:
+            login_django(request, usuario)
+            return redirect('index')
+    return render(request, 'login.html')

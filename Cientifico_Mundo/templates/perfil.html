@@ -40,7 +40,7 @@
     </style>
 </head>
 <body>
-{% load static%}
+{% load static %}
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
@@ -62,7 +62,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="profile-header">
-                    <img src="{% static 'Imagens PI/user_avatar.png' %}" alt="Avatar do Usuário">
+                    <img src="{{usuario.imagem.url}}" alt="Avatar do Usuário">
                     <h2>{{ usuario.nome }}</h2>
                     <p>{{ usuario.ocupacao.nome }}</p>
                     <p>{{ usuario.email }}</p>
