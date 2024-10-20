@@ -33,34 +33,36 @@
 <body>
 
 <div class="container">
-    <header class="header text-center">
-        <h1>Plataforma do TCC</h1>
-    </header>
 
     <div class="article-title text-center">
-        <h2>A Importância da Divulgação Científica na Sociedade Moderna</h2>
-        <p><strong>Orientador:</strong> Sicrana</p>
+        <h2>{{projeto.titulo}}</h2>
+        <p><strong>Autor: </strong>{{projeto.usuario}}</p>
+        <p><strong>Orientador:</strong> {{projeto.orientador}}</p>
     </div>
 
     <div class="content-section">
+        <h3>Resumo</h3>
+        <p>{{projeto.resumo}}</p>
+
         <h3>Introdução</h3>
-        <p>A divulgação científica desempenha um papel crucial na sociedade moderna, conectando o conhecimento produzido nas universidades e instituições de pesquisa à sociedade em geral. Essa conexão é essencial para promover a compreensão e a valorização da ciência.</p>
+        <p>{{projeto.introducao}}</p>
 
         <h3>Objetivos</h3>
-        <p>O objetivo deste trabalho é discutir a relevância da divulgação científica na formação de uma sociedade mais informada e crítica, capaz de tomar decisões embasadas em evidências científicas.</p>
+        <p>{{projeto.objetivo}}</p>
 
         <h3>Metodologia</h3>
-        <p>Este estudo foi realizado através de uma revisão bibliográfica e análise de casos de sucesso em divulgação científica, considerando a eficácia das estratégias utilizadas.</p>
+        <p>{{projeto.metodologia}}</p>
 
         <h3>Resultados</h3>
-        <p>Os resultados mostram que a divulgação científica contribui significativamente para a popularização da ciência e o aumento do interesse da população em temas científicos.</p>
+        <p>{{projeto.resultados}}</p>
 
         <h3>Conclusão</h3>
-        <p>Portanto, a divulgação científica é essencial para a construção de uma sociedade mais informada e engajada, que valorize a ciência e suas contribuições para o desenvolvimento social e econômico.</p>
+        <p>{{projeto.conclusao}}</p>
     </div>
     
     <footer class="text-center mt-5">
-        <p>Indicados por: João Silva</p>
+        <h4><strong>Validação</strong></h4>
+        <p>{{projeto.validacao}}</p>
     </footer>
 </div>
 {% endblock %}

@@ -89,7 +89,11 @@ def exclusao_projeto(request, id):
 
 #pagina do artigo
 def projeto(request):
-    return render(request, 'projeto.html')
+    projeto=Projeto.objects.first()
+    context={
+        'projeto':projeto
+    }
+    return render(request, 'projeto.html',context)
 
 #pagina de login
 def login(request):
