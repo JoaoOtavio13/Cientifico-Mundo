@@ -3,7 +3,7 @@ from Cientifico_Mundo.views import *
 
 urlpatterns = [
     path('', index, name='index'),
-    path('projeto/', projeto, name='projeto'),
+    path('projeto/<int:projeto_id>', projeto, name='projeto'),
     path('cadastro_usuario/', cadastro_usuario, name='cadastro_usuario'),
     path('editar_usuario/<int:id>/', editar_usuario, name='editar_usuario'),
     path('exclusao_usuario/<int:id>/', exclusao_usuario, name='exclusao_usuario'),
