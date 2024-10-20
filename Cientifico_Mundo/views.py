@@ -55,7 +55,6 @@ def perfil(request):
     return render(request, 'perfil.html',context)
 
 #crud do artigo
-# não está salvando
 def cadastro_projeto(request):
     if request.method=='POST':
         form=ProjetoForm(request.POST, request.FILES)
