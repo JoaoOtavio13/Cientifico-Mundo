@@ -31,16 +31,17 @@ def cadastro_usuario(request):
 def editar_usuario(request, id):
     usuario=Usuario.objects.get(id=id)
     if request.method=='POST':
-        form=UsuarioForm(request.POST, request.FILES, instance=usuario)
+        form=UsuarioEditForm(request.POST, request.FILES, instance=usuario)
         if form.is_valid():
             form.save()
+            usuario.set_password(request.POST.get('password'))
             return redirect('index') 
     else:
-        form=UsuarioForm(instance=usuario)
+        form=UsuarioEditForm(instance=usuario)
     context={
         'form':form
     }
-    return render(request, 'cadastro.html',context)
+    return render(request, 'editar.html',context)
 
 def exclusao_usuario(request, id):
     usuario=Usuario.objects.get(id=id)
@@ -88,8 +89,8 @@ def exclusao_projeto(request, id):
     return redirect('index')
 
 #pagina do artigo
-def projeto(request):
-    projeto=Projeto.objects.first()
+def projeto(request,projeto_id):
+    projeto=Projeto.objects.get(id=projeto_id)
     context={
         'projeto':projeto
     }

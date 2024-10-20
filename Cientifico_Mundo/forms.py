@@ -15,7 +15,20 @@ class UsuarioForm(forms.ModelForm):
             'imagem': forms.FileInput(attrs={'class': 'form-control'}),
             'username': forms.TextInput(attrs={'class': 'form-control'}),
         }
+         
+class UsuarioEditForm(forms.ModelForm):
+    class Meta:
+        model = Usuario
+        fields = ['nome','email','idade','ocupacao','imagem','username']
 
+        widgets = {
+            'nome': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'idade': forms.NumberInput(attrs={'class': 'form-control'}),
+            'ocupacao': forms.Select(attrs={'class': 'form-control'}),
+            'imagem': forms.FileInput(attrs={'class': 'form-control'}),
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
+        }
      
 class ProjetoForm(forms.ModelForm):
     class Meta:
