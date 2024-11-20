@@ -2,11 +2,19 @@ from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login as login_django
+from django.core.paginator import Paginator
 # Create your views here.
 
 #listagem de artigos
 def index(request):
     projetos=Projeto.objects.all()
+    paginator=Paginator(projetos, 3) #mostra 5 artigos por pagina
+
+    page= request.GET.get('page',1) #pega o numero da pagina
+    try:
+        projetos = paginator.page(page)
+    except:
+        projetos = paginator.page(1)
     context={
         'projetos':projetos
     }

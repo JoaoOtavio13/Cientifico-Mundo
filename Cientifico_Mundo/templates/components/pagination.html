@@ -1,0 +1,55 @@
+<nav aria-label="Navegação de páginas" class="mt-3">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link bg-dark text-light" href="?page=1" aria-label="Primeira">
+                    <span aria-hidden="true">&laquo;&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link bg-dark text-light" href="?page={{ page_obj.previous_page_number }}" aria-label="Anterior">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link bg-secondary text-light">&laquo;&laquo;</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link bg-secondary text-light">&laquo;</span>
+            </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <li class="page-item active">
+                    <span class="page-link bg-primary text-light">{{ num }}</span>
+                </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <li class="page-item">
+                    <a class="page-link bg-dark text-light" href="?page={{ num }}">{{ num }}</a>
+                </li>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link bg-dark text-light" href="?page={{ page_obj.next_page_number }}" aria-label="Próxima">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link bg-dark text-light" href="?page={{ page_obj.paginator.num_pages }}" aria-label="Última">
+                    <span aria-hidden="true">&raquo;&raquo;</span>
+                </a>
+            </li>
+        {% else %}
+            <li class="page-item disabled">
+                <span class="page-link bg-secondary text-light">&raquo;</span>
+            </li>
+            <li class="page-item disabled">
+                <span class="page-link bg-secondary text-light">&raquo;&raquo;</span>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

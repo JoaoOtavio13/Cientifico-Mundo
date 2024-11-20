@@ -80,7 +80,10 @@
         </div>
         {% endblock %}
     </div>
-
+<!-- Paginação -->
+<div class="mt-3">
+    {% include 'components/pagination.html' with page_obj=projetos %}
+ </div>
     <!-- Botão flutuante -->
     {% if user.is_authenticated %}
     <a href="{% url 'cadastro_projeto' %}" class="btn btn-dark btn-lg rounded-circle btn-floating">
