@@ -7,8 +7,14 @@ from django.core.paginator import Paginator
 
 #listagem de artigos
 def index(request):
-    projetos=Projeto.objects.all()
-    paginator=Paginator(projetos, 3) #mostra 5 artigos por pagina
+    projetos=Projeto.objects.all().order_by('nome')
+    projetos_filters=ProjetoFilterForm(request.GET or None)
+    if projetos_filters.is_valid():
+        if projetos_filters.cleaned_data.get['usuario']:
+            projetos=projetos.filter(usuario=projetos_filters.cleaned_data.get['usuario']).order_by('nome')
+        if projetos_filters.cleaned_data.get['titulo']:
+            projetos=projetos.filter(titulo__icontains=projetos_filters.cleaned_data.get['titulo']).order_by('nome')
+    paginator=Paginator(projetos, 3) #mostra 3 artigos por pagina
 
     page= request.GET.get('page',1) #pega o numero da pagina
     try:
