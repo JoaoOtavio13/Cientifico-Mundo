@@ -1,34 +1,54 @@
 from django import forms
 from .models import *
+from django.contrib.auth.forms import UserCreationForm
 
-class UsuarioForm(forms.ModelForm):
+class UsuarioForm(UserCreationForm):
+    idade = forms.IntegerField(required=True, help_text='Digite sua idade')
+    ocupacao = forms.ModelChoiceField(queryset=Ocupacao.objects.all(), required=True, help_text='Escolha uma ocupação')
+    imagem = forms.ImageField(required=False, help_text='Escolha uma imagem')
+    email = forms.EmailField(required=True, help_text='Digite seu email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Adiciona classe form-control aos campos padão do UserCreationForm
+        self.fields['username'].widget.attrs.update({'class': 'form-control'}) 
+        self.fields['email'].widget.attrs.update({ 'class': 'form-control'}) 
+        self.fields['idade'].widget.attrs.update({'class': 'form-control'})
+        self.fields['ocupacao'].widget.attrs.update({'class': 'form-control'})
+        self.fields['imagem'].widget.attrs.update({'class': 'form-control'})
+        self.fields['password1'].widget.attrs.update({'class': 'form-control'})   
+        self.fields['password2'].widget.attrs.update({'class': 'form-control'})
+
     class Meta:
         model = Usuario
-        fields = ['nome','email','idade','password','ocupacao','imagem','username']
+        fields = ('username', 'email', 'idade', 'ocupacao', 'imagem', 'password1', 'password2')
 
-        widgets = {
-            'nome': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'idade': forms.NumberInput(attrs={'class': 'form-control'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control'}),
-            'ocupacao': forms.Select(attrs={'class': 'form-control'}),
-            'imagem': forms.FileInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-        }
-         
 class UsuarioEditForm(forms.ModelForm):
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={'class': 'form-control'})
+    )
+    idade = forms.IntegerField(
+        required=True,
+        help_text='Digite sua idade',
+        widget=forms.NumberInput(attrs={'class': 'form-control'})
+    )
+    ocupacao = forms.ModelChoiceField(
+        queryset=Ocupacao.objects.all(),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    imagem = forms.ImageField(
+        widget=forms.FileInput(attrs={'class': 'form-control'})
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Adiciona classe form-control aos campos padão 
+        self.fields['username'].widget.attrs.update({'class': 'form-control'}) 
+        self.fields['email'].widget.attrs.update({ 'class': 'form-control'}) 
+
     class Meta:
         model = Usuario
-        fields = ['nome','email','idade','ocupacao','imagem','username']
-
-        widgets = {
-            'nome': forms.TextInput(attrs={'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control'}),
-            'idade': forms.NumberInput(attrs={'class': 'form-control'}),
-            'ocupacao': forms.Select(attrs={'class': 'form-control'}),
-            'imagem': forms.FileInput(attrs={'class': 'form-control'}),
-            'username': forms.TextInput(attrs={'class': 'form-control'}),
-        }
+        fields = ('username', 'email', 'idade', 'ocupacao', 'imagem')
      
 class ProjetoForm(forms.ModelForm):
     class Meta:
@@ -49,55 +69,64 @@ class ProjetoForm(forms.ModelForm):
             'orientador': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
-class ProjetoFilterForm(filter.Form): #'ProjetoFilterForm' é o nome da classe
-    usuario = forms.ModelChoiceField( # Campo de seleção para o usuário
+import django_filters
+
+class ProjetoFilterForm(django_filters.FilterSet):
+    usuario = django_filters.ModelChoiceFilter(
         queryset=Usuario.objects.all(),
-        required=False,
         label='Usuário',
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=False
     )
-    titulo = forms.CharField( # Campo de texto para o título
-        max_length=200,
-        required=False,
+    titulo = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Título',
-        widget=forms.TextInput(attrs={'playholder': 'Título do projeto', 'class': 'form-control'})
+        widget=forms.TextInput(attrs={'placeholder': 'Título do projeto', 'class': 'form-control'}),
+        required=False
     )
-    resumo = forms.CharField( # Campo de texto para o resumo
-        required=False,
+    resumo = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Resumo',
-        widget=forms.Textarea(attrs={'placeholder': 'Resumo do projeto', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={'placeholder': 'Resumo do projeto', 'class': 'form-control'}),
+        required=False
     )
-    introducao = forms.CharField( # Campo de texto para a introdução
-        required=False,
+    introducao = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Introdução',
-        widget=forms.Textarea(attrs={'placeholder': 'Introdução do projeto', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={'placeholder': 'Introdução do projeto', 'class': 'form-control'}),
+        required=False
     )
-    objetivo = forms.CharField( # Campo de texto para o objetivo
-        required=False,
+    objetivo = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Objetivo',
-        widget=forms.Textarea(attrs={'placeholder': 'Objetivo do projeto', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={'placeholder': 'Objetivo do projeto', 'class': 'form-control'}),
+        required=False
     )
-    metodologia = forms.CharField( # Campo de texto para a metodologia
-        required=False,
+    metodologia = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Metodologia',
-        widget=forms.Textarea(attrs={'placeholder': 'Metodologia do projeto', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={'placeholder': 'Metodologia do projeto', 'class': 'form-control'}),
+        required=False
     )
-    resultados = forms.CharField( # Campo de texto para os resultados
-        required=False,
+    resultados = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Resultados',
-        widget=forms.Textarea(attrs={'placeholder': 'Resultados do projeto', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={'placeholder': 'Resultados do projeto', 'class': 'form-control'}),
+        required=False
     )
-    conclusao = forms.CharField( # Campo de texto para a conclusão
-        required=False,
+    conclusao = django_filters.CharFilter(
+        lookup_expr='icontains',
         label='Conclusão',
-        widget=forms.Textarea(attrs={'placeholder': 'Conclusão do projeto', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={'placeholder': 'Conclusão do projeto', 'class': 'form-control'}),
+        required=False
     )
-    validacao = forms.ChoiceField( # Campo de seleção para a validação
-        choices=Projeto.VALIDACAO_CHOICES,
-        required=False,
+    validacao = django_filters.ModelChoiceFilter(
+        queryset=Validacao.objects.all(),
         label='Validação',
-        widget=forms.Select(attrs={'class': 'form-control'})
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        required=False
     )
+
     
 class InstituicaoForm(forms.ModelForm):
     class Meta:

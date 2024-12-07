@@ -63,7 +63,7 @@
             <div class="col-lg-8">
                 <div class="profile-header">
                     <img src="{{usuario.imagem.url}}" alt="Avatar do Usuário">
-                    <h2>{{ usuario.nome }}</h2>
+                    <h2>{{ usuario.username }}</h2>
                     <p>{{ usuario.ocupacao.nome }}</p>
                     <p>{{ usuario.email }}</p>
                     <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-outline-light btn-edit-profile">Editar Perfil</a>
@@ -72,6 +72,7 @@
             </div>
         </div>
 
+        <!-- Seção de Projetos -->  
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
