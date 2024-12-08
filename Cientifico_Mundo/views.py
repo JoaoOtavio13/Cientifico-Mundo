@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login as login_django, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.paginator import Paginator
 # Create your views here.
@@ -9,35 +10,9 @@ from django.core.paginator import Paginator
 # Listagem de artigos
 def index(request):
     projetos=Projeto.objects.all()
-    # projetos_filter=ProjetoFilterForm(request.GET or None)
-
-    # filtragem
-    # if projetos_filter.is_valid():
-    #     if projetos_filter.cleaned_data['titulo']:
-    #         projetos= projetos.filter(titulo__icontains=projetos_filter.cleaned_data['titulo'])
-    #     if projetos_filter.cleaned_data['usuario']: 
-    #         projetos= projetos.filter(usuario=projetos_filter.cleaned_data['usuario'])  
-    #     if projetos_filter.cleaned_data['validacao']:   
-    #         projetos= projetos.filter(validacao=projetos_filter.cleaned_data['validacao'])  
-    #     if projetos_filter.cleaned_data['orientador']:   
-    #         projetos= projetos.filter(orientador__icontains=projetos_filter.cleaned_data['orientador']) 
-    #     if projetos_filter.cleaned_data['resumo']:   
-    #         projetos= projetos.filter(resumo__icontains=projetos_filter.cleaned_data['resumo']) 
-    #     if projetos_filter.cleaned_data['introducao']:
-    #         projetos= projetos.filter(introducao__icontains=projetos_filter.cleaned_data['introducao'])
-    #     if projetos_filter.cleaned_data['objetivo']:
-    #         projetos= projetos.filter(objetivo__icontains=projetos_filter.cleaned_data['objetivo'])
-    #     if projetos_filter.cleaned_data['metodologia']:
-    #         projetos= projetos.filter(metodologia__icontains=projetos_filter.cleaned_data['metodologia'])
-    #     if projetos_filter.cleaned_data['resultados']:
-    #         projetos= projetos.filter(resultados__icontains=projetos_filter.cleaned_data['resultados'])
-    #     if projetos_filter.cleaned_data['conclusao']:
-    #         projetos= projetos.filter(conclusao__icontains=projetos_filter.cleaned_data['conclusao'])
-    #     if projetos_filter.cleaned_data['imagem']:
-    #         projetos= projetos.filter(imagem__icontains=projetos_filter.cleaned_data['imagem']) 
-        
+  
     # paginação
-    paginator=Paginator(projetos, 3)
+    paginator=Paginator(projetos, 6)
     page=request.GET.get('page')
     projetos=paginator.get_page(page)
     
@@ -96,6 +71,7 @@ def cadastro_usuario(request):
     }
     return render(request, 'cadastro.html',context)
 
+@login_required
 def editar_usuario(request, id):
     usuario=Usuario.objects.get(id=id)
     if request.method=='POST':
@@ -111,20 +87,14 @@ def editar_usuario(request, id):
     }
     return render(request, 'editar.html',context)
 
+@login_required
 def exclusao_usuario(request, id):
     usuario=Usuario.objects.get(id=id)
     usuario.delete()
     return redirect('index')
 
-#perfil
-def perfil(request):
-    usuario=Usuario.objects.get(id=request.user.id)
-    context={
-        'usuario': usuario     
-}
-    return render(request, 'perfil.html',context)
-
 #crud do artigo
+@login_required
 def cadastro_projeto(request):
     if request.method=='POST':
         form=ProjetoForm(request.POST, request.FILES)
@@ -138,6 +108,7 @@ def cadastro_projeto(request):
     }
     return render(request, 'adicionar_projeto.html',context)
 
+@login_required
 def editar_projeto(request, id):
     projeto=Projeto.objects.get(id=id)
     if request.method=='POST':
@@ -152,10 +123,11 @@ def editar_projeto(request, id):
     }
     return render(request, 'adicionar_projeto.html',context)
 
+@login_required
 def exclusao_projeto(request, id):
     projeto=Projeto.objects.get(id=id)
     projeto.delete()
-    return redirect('index')
+    return redirect('perfil')
 
 #pagina do artigo
 def projeto(request,projeto_id):
@@ -164,6 +136,33 @@ def projeto(request,projeto_id):
         'projeto':projeto
     }
     return render(request, 'projeto.html',context)
+
+#perfil
+def perfil(request):
+    usuario=Usuario.objects.get(id=request.user.id)
+    # projetos_filter=ProjetoFilterForm(request.GET or None)
+    projetos=Projeto.objects.filter(usuario=request.user) 
+
+    # # filtragem
+    # if projetos_filter.is_valid():
+    #     if projetos_filter.cleaned_data['titulo']:
+    #         projetos= projetos.filter(titulo__icontains=projetos_filter.cleaned_data['titulo'])
+    #     if projetos_filter.cleaned_data['resumo']:   
+    #         projetos= projetos.filter(resumo__icontains=projetos_filter.cleaned_data['resumo']) 
+     
+  # paginação
+    paginator=Paginator(projetos, 3)
+    page=request.GET.get('page')
+    projetos=paginator.get_page(page)
+
+    context={
+        'usuario': usuario,
+        'projetos':projetos,
+        # 'projetos_filter':projetos_filter
+             
+}
+    return render(request, 'perfil.html',context)
+
 
 #pagina de login
 def login(request):

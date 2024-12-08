@@ -45,7 +45,7 @@ class Projeto(models.Model):
     metodologia = models.TextField()
     resultados = models.TextField()
     conclusao = models.TextField()
-    validacao = models.ForeignKey(Validacao, on_delete= models.CASCADE)
+    validacao = models.ForeignKey(Validacao, on_delete= models.CASCADE, null=True, blank=True)
     imagem = models.ImageField(upload_to='capas/')
     orientador = models.CharField(max_length=150)
 

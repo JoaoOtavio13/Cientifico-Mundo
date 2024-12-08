@@ -72,12 +72,6 @@ class ProjetoForm(forms.ModelForm):
 import django_filters
 
 class ProjetoFilterForm(django_filters.FilterSet):
-    usuario = django_filters.ModelChoiceFilter(
-        queryset=Usuario.objects.all(),
-        label='Usuário',
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False
-    )
     titulo = django_filters.CharFilter(
         lookup_expr='icontains',
         label='Título',
@@ -90,43 +84,6 @@ class ProjetoFilterForm(django_filters.FilterSet):
         widget=forms.Textarea(attrs={'placeholder': 'Resumo do projeto', 'class': 'form-control'}),
         required=False
     )
-    introducao = django_filters.CharFilter(
-        lookup_expr='icontains',
-        label='Introdução',
-        widget=forms.Textarea(attrs={'placeholder': 'Introdução do projeto', 'class': 'form-control'}),
-        required=False
-    )
-    objetivo = django_filters.CharFilter(
-        lookup_expr='icontains',
-        label='Objetivo',
-        widget=forms.Textarea(attrs={'placeholder': 'Objetivo do projeto', 'class': 'form-control'}),
-        required=False
-    )
-    metodologia = django_filters.CharFilter(
-        lookup_expr='icontains',
-        label='Metodologia',
-        widget=forms.Textarea(attrs={'placeholder': 'Metodologia do projeto', 'class': 'form-control'}),
-        required=False
-    )
-    resultados = django_filters.CharFilter(
-        lookup_expr='icontains',
-        label='Resultados',
-        widget=forms.Textarea(attrs={'placeholder': 'Resultados do projeto', 'class': 'form-control'}),
-        required=False
-    )
-    conclusao = django_filters.CharFilter(
-        lookup_expr='icontains',
-        label='Conclusão',
-        widget=forms.Textarea(attrs={'placeholder': 'Conclusão do projeto', 'class': 'form-control'}),
-        required=False
-    )
-    validacao = django_filters.ModelChoiceFilter(
-        queryset=Validacao.objects.all(),
-        label='Validação',
-        widget=forms.Select(attrs={'class': 'form-control'}),
-        required=False
-    )
-
     
 class InstituicaoForm(forms.ModelForm):
     class Meta:
