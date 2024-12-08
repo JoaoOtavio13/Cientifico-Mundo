@@ -87,7 +87,6 @@
                 </div>
                 {% endif %}
             </div>
-            {% endblock %}
         </div>
     </main>
 
@@ -95,7 +94,9 @@
     <div class="d-flex justify-content-center mt-4">
         {% include 'components/pagination.html' with page_obj=projetos %}
     </div>
+    {% endblock %}
 
+    
     <!-- Botão flutuante -->
     {% if user.is_authenticated %}
     <a href="{% url 'cadastro_projeto' %}" class="btn btn-dark btn-lg rounded-circle btn-floating" aria-label="Adicionar projeto">

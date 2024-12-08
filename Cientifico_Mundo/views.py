@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from .models import *
 from .forms import *
 from django.contrib.auth import authenticate, login as login_django, logout
@@ -130,12 +130,27 @@ def exclusao_projeto(request, id):
     return redirect('perfil')
 
 #pagina do artigo
-def projeto(request,projeto_id):
-    projeto=Projeto.objects.get(id=projeto_id)
-    context={
-        'projeto':projeto
+def projeto(request, projeto_id):
+    projeto = get_object_or_404(Projeto, id=projeto_id)
+    comentarios = projeto.comentarios.all().order_by('-data_criacao')  # Recupera comentários relacionados
+
+    if request.method == 'POST':
+        form = ComentarioForm(request.POST)
+        if form.is_valid():
+            comentario = form.save(commit=False)
+            comentario.usuario = request.user
+            comentario.projeto = projeto
+            comentario.save()
+            return redirect('projeto', projeto_id=projeto.id)
+    else:
+        form = ComentarioForm()
+
+    context = {
+        'projeto': projeto,
+        'comentarios': comentarios,
+        'form': form,
     }
-    return render(request, 'projeto.html',context)
+    return render(request, 'projeto.html', context)
 
 #perfil
 @login_required
@@ -150,7 +165,7 @@ def perfil(request):
     projetos_filtrados = projetos_filter.qs.order_by('titulo')  # Ordena novamente após filtrar
 
     # Paginação
-    paginator = Paginator(projetos_filtrados, 3)
+    paginator = Paginator(projetos_filtrados, 2)
     page = request.GET.get('page')
     projetos = paginator.get_page(page)
 

@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Importância da Divulgação Científica na Sociedade Moderna</title>
+    <title>Projeto</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -28,6 +28,14 @@
         .content-section {
             margin-top: 20px;
         }
+        .comentarios ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .comentarios li {
+        margin-bottom: 10px; 
+    }
     </style>
 </head>
 <body>
@@ -41,7 +49,7 @@
     </div>
 
     <div class="content-section">
-        <img src="{{projeto.imagem.url}}" alt="imagem do artigo">
+        <img src="{{ projeto.imagem.url }}" alt="imagem do artigo" class="img-fluid" width="75%" height="75%" style="margin-left: 15%;">
 
         <h3>Resumo</h3>
         <p>{{projeto.resumo}}</p>
@@ -66,6 +74,31 @@
         <h4><strong>Validação</strong></h4>
         <p>{{projeto.validacao}}</p>
     </footer>
+</div>
+
+<div class="comentarios">
+    <h3>Comentários</h3>
+    <ul>
+        {% for comentarios in comentarios %}
+        <li>
+            <strong>{{ comentarios.usuario.username }}</strong> - {{ comentarios.data_criacao|date:"d/m/Y H:i" }}
+            <p>{{ comentarios.texto }}</p>
+        </li>
+        {% empty %}
+        <li>Seja o primeiro a comentar!</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<hr>
+
+<div class="comentario-form">
+    <h3>Deixe um comentário</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-dark">Enviar</button>
+    </form>
 </div>
 {% endblock %}
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
