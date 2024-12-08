@@ -138,30 +138,29 @@ def projeto(request,projeto_id):
     return render(request, 'projeto.html',context)
 
 #perfil
+@login_required
 def perfil(request):
-    usuario=Usuario.objects.get(id=request.user.id)
-    # projetos_filter=ProjetoFilterForm(request.GET or None)
-    projetos=Projeto.objects.filter(usuario=request.user) 
+    usuario = Usuario.objects.get(id=request.user.id)
+    projetos = Projeto.objects.filter(usuario=request.user).order_by('titulo')  # Ordena alfabeticamente por título
+    
+    # Aplicação do filtro
+    projetos_filter = ProjetoFilterForm(request.GET, queryset=projetos)  # Passe o QuerySet inicial
+    
+    # Obtenha o QuerySet filtrado diretamente e ordenado
+    projetos_filtrados = projetos_filter.qs.order_by('titulo')  # Ordena novamente após filtrar
 
-    # # filtragem
-    # if projetos_filter.is_valid():
-    #     if projetos_filter.cleaned_data['titulo']:
-    #         projetos= projetos.filter(titulo__icontains=projetos_filter.cleaned_data['titulo'])
-    #     if projetos_filter.cleaned_data['resumo']:   
-    #         projetos= projetos.filter(resumo__icontains=projetos_filter.cleaned_data['resumo']) 
-     
-  # paginação
-    paginator=Paginator(projetos, 3)
-    page=request.GET.get('page')
-    projetos=paginator.get_page(page)
+    # Paginação
+    paginator = Paginator(projetos_filtrados, 3)
+    page = request.GET.get('page')
+    projetos = paginator.get_page(page)
 
-    context={
+    # Contexto para renderização
+    context = {
         'usuario': usuario,
-        'projetos':projetos,
-        # 'projetos_filter':projetos_filter
-             
-}
-    return render(request, 'perfil.html',context)
+        'projetos': projetos,
+        'projetos_filter': projetos_filter
+    }
+    return render(request, 'perfil.html', context)
 
 
 #pagina de login

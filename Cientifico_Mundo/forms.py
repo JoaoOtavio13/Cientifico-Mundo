@@ -84,6 +84,9 @@ class ProjetoFilterForm(django_filters.FilterSet):
         widget=forms.Textarea(attrs={'placeholder': 'Resumo do projeto', 'class': 'form-control'}),
         required=False
     )
+    class Meta:
+        model = Projeto  # Vincule explicitamente o modelo
+        fields = ['titulo', 'resumo']
     
 class InstituicaoForm(forms.ModelForm):
     class Meta:

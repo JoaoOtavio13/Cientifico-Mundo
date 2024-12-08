@@ -51,10 +51,6 @@
                 <img src="{% static 'Imagens PI/logo.png' %}" alt="Logo do Científico Mundo" width="40" height="40">
                 Científico Mundo
             </a>
-            <form class="d-flex ms-auto" role="search" method="dialog">
-                {{ projetos_filters.form.titulo }}
-                <button class="btn btn-outline-light" type="submit">Pesquisar</button>
-            </form>
             <div class="ms-3">
                 <a href="{% url 'login' %}" class="btn btn-outline-light">Login/Entrar</a>
                 {% if user.is_authenticated %}
