@@ -3,6 +3,7 @@ from .models import *
 from django.contrib.auth.forms import UserCreationForm
 
 class UsuarioForm(UserCreationForm):
+    nome= forms.CharField(required=True, help_text="Digite seu nome:")
     idade = forms.IntegerField(required=True, help_text='Digite sua idade')
     ocupacao = forms.ModelChoiceField(queryset=Ocupacao.objects.all(), required=True, help_text='Escolha uma ocupação')
     imagem = forms.ImageField(required=False, help_text='Escolha uma imagem')
@@ -10,8 +11,8 @@ class UsuarioForm(UserCreationForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Adiciona classe form-control aos campos padão do UserCreationForm
-        self.fields['username'].widget.attrs.update({'class': 'form-control'}) 
+        self.fields['username'].widget.attrs.update({'class': 'form-control'})
+        self.fields['nome'].widget.attrs.update({'class':'form-control'}) 
         self.fields['email'].widget.attrs.update({ 'class': 'form-control'}) 
         self.fields['idade'].widget.attrs.update({'class': 'form-control'})
         self.fields['ocupacao'].widget.attrs.update({'class': 'form-control'})
@@ -21,14 +22,17 @@ class UsuarioForm(UserCreationForm):
 
     class Meta:
         model = Usuario
-        fields = ('username', 'email', 'idade', 'ocupacao', 'imagem', 'password1', 'password2')
+        fields = ('username', 'email', 'idade', 'ocupacao', 'imagem', 'password1', 'password2','nome')
 
 class UsuarioEditForm(forms.ModelForm):
+    nome= forms.CharField(
+        widget=forms.TextInput(attrs={'class':'form-control'})
+    )
     email = forms.EmailField(
         widget=forms.EmailInput(attrs={'class': 'form-control'})
     )
     idade = forms.IntegerField(
-        required=True,
+        required=False,
         help_text='Digite sua idade',
         widget=forms.NumberInput(attrs={'class': 'form-control'})
     )
@@ -48,7 +52,7 @@ class UsuarioEditForm(forms.ModelForm):
 
     class Meta:
         model = Usuario
-        fields = ('username', 'email', 'idade', 'ocupacao', 'imagem')
+        fields = ('username', 'email', 'idade', 'ocupacao', 'imagem','nome')
      
 class ProjetoForm(forms.ModelForm):
     class Meta:

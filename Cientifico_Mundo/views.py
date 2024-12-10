@@ -10,7 +10,6 @@ from django.core.paginator import Paginator
 # Listagem de artigos
 def index(request):
     projetos=Projeto.objects.all()
-  
     # paginação
     paginator=Paginator(projetos, 6)
     page=request.GET.get('page')
@@ -136,7 +135,7 @@ def exclusao_projeto(request, id):
 def projeto(request, projeto_id):
     projeto = get_object_or_404(Projeto, id=projeto_id)
     comentarios = projeto.comentarios.all().order_by('-data_criacao')  # Recupera comentários relacionados
-
+    usuario = Usuario.objects.get(id=projeto.usuario.id)
     if request.method == 'POST':
         form = ComentarioForm(request.POST)
         if form.is_valid():
@@ -149,6 +148,7 @@ def projeto(request, projeto_id):
         form = ComentarioForm()
 
     context = {
+        'usuario':usuario,
         'projeto': projeto,
         'comentarios': comentarios,
         'form': form,

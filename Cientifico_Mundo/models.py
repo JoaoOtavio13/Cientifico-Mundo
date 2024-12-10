@@ -10,6 +10,7 @@ class Ocupacao(models.Model):
         return self.nome
 
 class Usuario(AbstractUser):
+    nome = models.CharField(max_length=200)
     idade = models.IntegerField(null=True, blank=True)
     ocupacao=models.ForeignKey(Ocupacao, on_delete=models.CASCADE, null=True, blank=True)
     imagem=models.ImageField(upload_to='usuarios', null=True, blank=True)

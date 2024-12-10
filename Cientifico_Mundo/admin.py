@@ -8,7 +8,7 @@ class OcupacaoAdmin(admin.ModelAdmin):
 
 @admin.register(Usuario)
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ['idade', 'ocupacao', 'imagem']
+    list_display = ['nome','idade', 'ocupacao', 'imagem']
 
 @admin.register(Comentario)
 class ComentarioAdmin(admin.ModelAdmin):

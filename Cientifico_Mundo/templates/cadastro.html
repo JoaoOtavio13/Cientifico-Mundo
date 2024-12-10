@@ -36,11 +36,20 @@
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
-                <label for="nome" class="form-label">Nome:</label>
+                <label for="nome" class="form-label">UserName:</label>
                 <input type="text" name="username" id="username" class="form-control" required>
                 {% if form.username.errors %}
                     <div class="text-danger">
                         {{ form.username.errors.0 }}
+                    </div>    
+                {% endif %}
+            </div>
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome:</label>
+                <input type="text" name="nome" id="nome" class="form-control" required>
+                {% if form.nome.errors %}
+                    <div class="text-danger">
+                        {{ form.nome.errors.0 }}
                     </div>    
                 {% endif %}
             </div>
