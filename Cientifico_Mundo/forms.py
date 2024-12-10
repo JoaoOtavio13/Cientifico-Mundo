@@ -53,10 +53,9 @@ class UsuarioEditForm(forms.ModelForm):
 class ProjetoForm(forms.ModelForm):
     class Meta:
         model = Projeto
-        fields = '__all__'
+        fields = ['titulo','resumo','introducao','objetivo','metodologia','resultados','conclusao','validacao','imagem','orientador']
 
         widgets = {
-            'usuario': forms.Select(attrs={'class': 'form-control'}),
             'titulo': forms.TextInput(attrs={'class': 'form-control'}),
             'resumo': forms.Textarea(attrs={'class': 'form-control'}),
             'introducao': forms.Textarea(attrs={'class': 'form-control'}),

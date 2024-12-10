@@ -99,7 +99,10 @@ def cadastro_projeto(request):
     if request.method=='POST':
         form=ProjetoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            projeto=form.save(commit=False)
+            usuario=Usuario.objects.get(id=request.user.pk)
+            projeto.usuario=usuario
+            projeto.save()
             return redirect('index')
     else:
         form=ProjetoForm()
